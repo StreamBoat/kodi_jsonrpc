@@ -324,6 +324,10 @@ func (c *Connection) writer() {
 	for {
 		var req interface{}
 		req = <-c.write
+		// Exit gorouting if channel has been closed
+		if req == nil {
+			return
+		}
 		for err := c.enc.Encode(req); err != nil; {
 			log.WithField(`error`, err).Warn(`Failed encoding request for Kodi`)
 			if err = c.connect(); err != nil {
@@ -340,6 +344,11 @@ func (c *Connection) reader() {
 		res := new(rpcResponse)
 		err := c.dec.Decode(res)
 		if _, ok := err.(net.Error); err == io.EOF || ok {
+			// If we got error while reading from codi and status is not connected
+			// return from goroutine as our client has been closed
+			if c.Closed {
+				return
+			}
 			log.WithField(`error`, err).Error(`Reading from Kodi`)
 			log.Error(`If this error persists, make sure you are using the JSON-RPC port, not the HTTP port!`)
 			for err != nil {
