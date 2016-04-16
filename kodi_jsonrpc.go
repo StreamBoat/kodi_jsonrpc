@@ -67,7 +67,7 @@ type rpcResponse struct {
 	JsonRPC string                  `json:"jsonrpc"`
 	Method  *string                 `json:"method"`
 	Params  *map[string]interface{} `json:"params"`
-	Result  *map[string]interface{} `json:"result"`
+	Result  interface{}             `json:"result"`
 	Error   *rpcError               `json:"error"`
 }
 
@@ -134,7 +134,7 @@ func SetLogLevel(level log.Level) {
 // Read returns the result and any errors from the response channel
 // If timeout (seconds) is greater than zero, read will fail if not returned
 // within this time.
-func (rchan *Response) Read(timeout time.Duration) (result map[string]interface{}, err error) {
+func (rchan *Response) Read(timeout time.Duration) (result interface{}, err error) {
 	rchan.readLock.Lock()
 	defer close(*rchan.channel)
 	defer func() {
@@ -168,15 +168,16 @@ func (rchan *Response) Read(timeout time.Duration) (result map[string]interface{
 }
 
 // Unpack the result and any errors from the Response
-func (res *rpcResponse) unpack() (result map[string]interface{}, err error) {
+func (res *rpcResponse) unpack() (result interface{}, err error) {
 	if res.Error != nil {
 		err = fmt.Errorf(`Kodi error (%v): %v`, res.Error.Code, res.Error.Message)
 	} else if res.Result != nil {
-		result = *res.Result
+		return res.Result, nil
 	} else {
 		log.WithField(`response`, res).Debug(`Received unknown response type from Kodi`)
+		// XXX err nil?
 	}
-	return result, err
+	return nil, err
 }
 
 // init brings up an instance of the Kodi Connection
@@ -212,7 +213,8 @@ func (c *Connection) init(address string, timeout time.Duration) (err error) {
 		log.WithField(`error`, err).Error(`Kodi responded`)
 		return err
 	}
-	if version := res[`version`].(map[string]interface{}); version != nil {
+	resmap := res.(map[string]interface{})
+	if version := resmap[`version`].(map[string]interface{}); version != nil {
 		if version[`major`].(float64) < KODI_MIN_VERSION {
 			return errors.New(`Kodi version too low, upgrade to Frodo or later`)
 		}
@@ -386,7 +388,7 @@ func (c *Connection) reader() {
 		} else if res.Id != nil {
 			if ch := c.responses[uint32(*res.Id)]; ch != nil {
 				if res.Result != nil {
-					log.WithField(`response.Result`, *res.Result).Debug(`Received response from Kodi`)
+					log.WithField(`response.Result`, res.Result).Debug(`Received response from Kodi`)
 				}
 				*ch <- res
 			} else {
