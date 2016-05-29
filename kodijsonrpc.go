@@ -1,10 +1,10 @@
-// Package kodi_jsonrpc provides an interface for communicating with a Kodi/XBMC
+// Package kodijsonrpc provides an interface for communicating with a Kodi/XBMC
 // server via the raw JSON-RPC socket
 //
 // Extracted from the kodi-callback-daemon.
 //
 // Released under the terms of the MIT License (see LICENSE).
-package kodi_jsonrpc
+package kodijsonrpc
 
 import (
 	"encoding/json"
