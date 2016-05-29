@@ -1,10 +1,10 @@
-# kodi\_jsonrpc
+# kodijsonrpc
 [![GoDoc](https://godoc.org/github.com/StreamBoat/kodi_jsonrpc?status.svg)](http://godoc.org/github.com/StreamBoat/kodi_jsonrpc) ![License-MIT](http://img.shields.io/badge/license-MIT-red.svg)
 ```go
 import "github.com/StreamBoat/kodi_jsonrpc"
 ```
 
-Package `kodi_jsonrpc` provides an interface for communicating with a Kodi/XBMC
+Package `kodijsonrpc` provides an interface for communicating with a Kodi/XBMC
 server via the raw JSON-RPC socket
 
 Extracted from the kodi-callback-daemon.

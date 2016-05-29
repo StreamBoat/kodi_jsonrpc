@@ -1,4 +1,4 @@
-package kodi_jsonrpc
+package kodijsonrpc
 
 import "fmt"
 
