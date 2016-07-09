@@ -1,4 +1,14 @@
 
+<a name="v2.0.6"></a>
+# v2.0.6 (2016-07-09)
+
+## :house: Housekeeping
+
+- **core**:
+  - Add deprecation notices to this package. ([4d22ed3b](https://github.com/StreamBoat/kodi_jsonrpc/commit/4d22ed3be682cd4de61e928dccbee81b42383028))  
+    <br>New package is available at https://github.com/pdf/kodirpc
+
+
 <a name="v2.0.4"></a>
 # v2.0.4 (2015-07-05)
 

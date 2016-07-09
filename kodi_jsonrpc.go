@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"io"
 	"net"
+	"os"
 	"sync"
 	"time"
 
@@ -102,6 +103,8 @@ const (
 )
 
 func init() {
+	// Log deprecation warning
+	fmt.Fprintln(os.Stderr, `The github.com/StreamBoat/kodi_jsonrpc package is deprecated, please consider migrating to github.com/pdf/kodirpc`)
 	// Initialize logger, default to level Info
 	log.SetLevel(LogInfoLevel)
 }

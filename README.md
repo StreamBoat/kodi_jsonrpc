@@ -1,3 +1,7 @@
+# DEPRECATED
+
+This package is no longer maintained, please consider migrating to [github.com/pdf/kodirpc](https://github.com/pdf/kodirpc)
+
 # kodi\_jsonrpc
 [![GoDoc](https://godoc.org/github.com/StreamBoat/kodi_jsonrpc?status.svg)](http://godoc.org/github.com/StreamBoat/kodi_jsonrpc) ![License-MIT](http://img.shields.io/badge/license-MIT-red.svg)
 ```go
