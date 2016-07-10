@@ -1,7 +1,5 @@
-// Package kodi_jsonrpc provides an interface for communicating with a Kodi/XBMC
-// server via the raw JSON-RPC socket
-//
-// Extracted from the kodi-callback-daemon.
+// Package kodi_jsonrpc is deprecated, please consider migrating to
+// github.com/pdf/kodirpc
 //
 // Released under the terms of the MIT License (see LICENSE).
 package kodi_jsonrpc
